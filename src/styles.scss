@@ -1,1 +1,13 @@
-/* You can add global styles to this file, and also import other style files */
+@use 'styles/reset';
+
+:root {
+    --font-family: 'Inter', sans-serif;
+}
+
+:root[data-theme='light'] {
+    --color-primary: #17E663;
+}
+
+:root[data-theme='dark'] {
+    --color-primary: #17E663;
+}

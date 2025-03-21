@@ -96,12 +96,15 @@
               }
             ],
             "styles": [
-              "src/styles.scss"
+              "src/styles.css"
             ],
             "scripts": []
           }
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "77402ea7-112e-471d-8e01-b6abfbec8045"
   }
 }

@@ -1,0 +1,14 @@
+:host {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1.875rem;
+}
+
+.profile-photo {
+  width: 9.375rem;
+  height: 9.375rem;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 0.188rem solid var(--border-color);
+}

@@ -1,0 +1,157 @@
+<div class="heading">
+  <h1>Welcome to Festivo</h1>
+  <p>Please enter your personal data to create an account.</p>
+</div>
+
+<form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
+  <div class="form-field">
+    <label class="form-label" for="fullName">Full Name <span class="form-required-field">*</span></label>
+    <span class="input-with-icon">
+      <input
+        id="fullName"
+        type="text"
+        pInputText
+        formControlName="fullName"
+        [ngClass]="{'ng-invalid ng-dirty': submitted && signupForm.get('fullName')?.errors}"
+      />
+    </span>
+    @if (submitted || (signupForm.controls.fullName.invalid &&
+    signupForm.controls.fullName.touched &&
+    signupForm.controls.fullName.dirty)){ @if
+    (signupForm.controls.fullName.errors?.['required']) {
+    <small class="error-message">Full name is required</small>
+    } }
+  </div>
+
+  <div class="form-field">
+    <label class="form-label" for="email">Email <span class="form-required-field">*</span></label>
+    <span class="input-with-icon">
+      <input
+        id="email"
+        type="email"
+        pInputText
+        formControlName="email"
+        [ngClass]="{'ng-invalid ng-dirty': submitted && signupForm.get('email')?.errors}"
+      />
+    </span>
+    @if (submitted || (signupForm.controls.email.invalid &&
+    signupForm.controls.email.touched && signupForm.controls.email.dirty)){ @if
+    (signupForm.controls.email.errors?.['required']) {
+    <small class="error-message">Email is required</small>
+    } @if (signupForm.controls.email.errors?.['email']) {
+    <small class="error-message">Please enter a valid email address</small>
+    } }
+  </div>
+
+  <div class="form-field">
+    <label class="form-label" for="phoneNumber">Phone Number <span class="form-required-field">*</span></label>
+    <span class="input-with-icon">
+      <p-inputMask
+        id="phoneNumber"
+        formControlName="phoneNumber"
+        mask="(99) 99999-9999"
+        styleClass="full-width"
+        [ngClass]="{'ng-invalid ng-dirty': submitted && signupForm.get('phoneNumber')?.errors}"
+      ></p-inputMask>
+      @if (submitted || (signupForm.controls.phoneNumber.invalid &&
+      signupForm.controls.phoneNumber.touched &&
+      signupForm.controls.phoneNumber.dirty)) { @if
+      (signupForm.controls.phoneNumber.errors?.['required']) {
+      <small class="error-message">Phone number is required</small>
+      } @if (signupForm.controls.phoneNumber.errors?.['minlength']) {
+      <small class="error-message">Please enter a valid phone number</small>
+      } }
+    </span>
+  </div>
+
+  <div class="form-field-group" formGroupName="passwords">
+    <div class="form-field">
+      <label class="form-label" for="password">Password <span class="form-required-field">*</span></label>
+      <span class="input-with-icon">
+        <p-password
+          id="password"
+          formControlName="password"
+          [toggleMask]="true"
+          [feedback]="true"
+          styleClass="full-width"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && signupForm.get('passwords.password')?.errors}"
+        ></p-password>
+      </span>
+      @if (submitted || (signupForm.controls.passwords.controls.password.invalid
+      && signupForm.controls.passwords.controls.password.touched &&
+      signupForm.controls.passwords.controls.password.dirty)) { @if
+      (signupForm.controls.passwords.controls.password.errors?.['required']) {
+      <small class="error-message">Password is required</small>
+      } @if
+      (signupForm.controls.passwords.controls.password.errors?.['minlength']) {
+      <small class="error-message"
+        >Password must be at least 8 characters</small
+      >
+      } }
+    </div>
+
+    <div class="form-field">
+      <label class="form-label" for="confirmPassword">Confirm Password <span class="form-required-field">*</span></label>
+      <span class="input-with-icon">
+        <p-password
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          [feedback]="false"
+          [toggleMask]="true"
+          styleClass="full-width"
+          [ngClass]="{'ng-invalid ng-dirty': submitted && signupForm.get('passwords.confirmPassword')?.errors}"
+        ></p-password>
+      </span>
+      @if (submitted ||
+      (signupForm.controls.passwords.controls.confirmPassword.invalid &&
+      signupForm.controls.passwords.controls.confirmPassword.touched &&
+      signupForm.controls.passwords.controls.confirmPassword.dirty)) { @if
+      (signupForm.controls.passwords.controls.confirmPassword.errors?.['required'])
+      {
+      <small class="error-message">Password is required</small>
+      } @if
+      (signupForm.controls.passwords.controls.confirmPassword.errors?.['minlength'])
+      {
+      <small class="error-message"
+        >Password must be at least 8 characters</small
+      >
+      } } @if (submitted &&
+      signupForm.get('passwords')?.errors?.['passwordsDoNotMatch']) {
+      <small class="error-message">Passwords do not match</small>
+      }
+    </div>
+  </div>
+
+  <div class="form-field">
+    <label class="form-label" for="birthDate">Date of Birth <span class="form-required-field">*</span></label>
+    <p-datepicker
+      id="birthDate"
+      formControlName="birthDate"
+      [showIcon]="true"
+      dateFormat="mm/dd/yy"
+      styleClass="full-width"
+      [ngClass]="{'ng-invalid ng-dirty': submitted && signupForm.get('birthDate')?.errors}"
+    ></p-datepicker>
+    @if (submitted || (signupForm.controls.birthDate.invalid &&
+    signupForm.controls.birthDate.touched &&
+    signupForm.controls.birthDate.dirty)) { @if
+    (signupForm.controls.birthDate.errors?.['required']) {
+    <small class="error-message">Birth date is required</small>
+    } }
+  </div>
+
+  <div>
+    <p-button
+      type="submit"
+      label="Submit"
+      styleClass="p-button-raised"
+      fluid
+    ></p-button>
+  </div>
+</form>
+<div>
+  <p>
+    Already have an account?
+    <a class="form-link" [routerLink]="['/auth/login']">Login</a>
+  </p>
+</div>

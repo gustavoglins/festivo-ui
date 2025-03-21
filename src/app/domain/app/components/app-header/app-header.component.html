@@ -1,0 +1,140 @@
+<div class="logo-container">
+  <h1>Festivo</h1>
+</div>
+
+<nav>
+  <ul>
+    <li 
+    [routerLinkActive]="'active'"
+    [routerLinkActiveOptions]="{ exact: true }"
+    >
+    <a [routerLink]="['/home']">
+      <i class="material-symbols-outlined">home</i>
+      Home
+    </a>
+  </li>
+  <li
+  [routerLinkActive]="'active'"
+  [routerLinkActiveOptions]="{ exact: true }"
+  >
+  <a [routerLink]="['/parties']">
+    <i class="material-symbols-outlined">celebration</i>
+    Events
+  </a>
+</li>
+<li
+[routerLinkActive]="'active'"
+[routerLinkActiveOptions]="{ exact: true }"
+>
+<a [routerLink]="['/create-party']">
+  <i class="material-symbols-outlined">add_circle</i>
+  Create Event
+</a>
+</li>
+<li
+[routerLinkActive]="'active'"
+[routerLinkActiveOptions]="{ exact: true }"
+>
+<a [routerLink]="['/my-parties']">
+  <i class="material-symbols-outlined">person</i>
+  My Events
+</a>
+</li>
+<li
+[routerLinkActive]="'active'"
+[routerLinkActiveOptions]="{ exact: true }"
+>
+<a [routerLink]="['/friends-invitations']">
+  <i class="material-symbols-outlined">groups</i>
+  Friends & Invitations
+</a>
+</li>
+</ul>
+</nav>
+
+<div class="actions-container">
+  @if (isAuthenticated()) {
+    <p-button
+    icon="pi pi-bell"
+    severity="contrast"
+    [text]="true"
+    [rounded]="true"
+    (onClick)="notification.toggle($event)"
+    />
+    <p-button
+    icon="pi pi-user"
+    [rounded]="true"
+    severity="contrast"
+    (onClick)="profile.toggle($event)"
+    />
+    <!-- <p-button
+    icon="pi pi-user"
+    [rounded]="true"
+    severity="contrast"
+    [routerLink]="['/profile']"
+    (onClick)="profile.toggle($event)"
+    /> -->
+  } @else {
+    <p-button
+    label="Login"
+    severity="secondary"
+    variant="outlined"
+    icon="pi pi-sign-in"
+    [routerLink]="['/auth/login']"
+    />
+    <p-button
+    label="Sign Up"
+    severity="contrast"
+    icon="pi pi-user-plus"
+    [routerLink]="['/auth/signup']"
+    />
+  }
+</div>
+
+<!-- TODO, get the notifications -->
+<p-popover #notification class="notificaton-popover">
+  <h5>Notifications</h5>
+  <p-tabs value="0">
+    <p-tablist>
+      <p-tab value="0">All</p-tab>
+      <p-tab value="1">Friends</p-tab>
+      <p-tab value="2">Events</p-tab>
+      <p-tab value="3">Invitations</p-tab>
+    </p-tablist>
+    <p-tabpanels>
+      <p-tabpanel value="0"> </p-tabpanel>
+      <p-tabpanel value="1"> </p-tabpanel>
+      <p-tabpanel value="2"> </p-tabpanel>
+      <p-tabpanel value="3"> </p-tabpanel>
+    </p-tabpanels>
+  </p-tabs>
+</p-popover>
+
+<p-popover
+#profile
+class="profile-popover"
+[style]="{ display: 'flex', width: 'auto' }"
+>
+<p-button
+icon="pi pi-pencil"
+label="Edit Profile"
+[rounded]="false"
+severity="secondary"
+[routerLink]="['/profile']"
+(onClick)="profile.hide()"
+fluid
+size="small"
+/>
+
+<p-divider />
+
+<p-button
+icon="pi pi-sign-out"
+label="Logout"
+[rounded]="false"
+severity="danger"
+(onClick)="[profile.hide(), onLogout()]"
+fluid
+size="small"
+/>
+</p-popover>

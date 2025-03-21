@@ -1,0 +1,55 @@
+@if (profilePicture) {
+<img [src]="profilePicture" alt="user-profile-photo" class="profile-photo" />
+} @else {
+<i class="pi pi-user" style="font-size: 2.5rem"></i>
+}
+
+<p-fileUpload
+  mode="basic"
+  [auto]="true"
+  chooseLabel="Change Photo"
+  chooseIcon="pi pi-upload"
+  name="file"
+  url="http://localhost:8080/api/user/upload-profile-photo"
+  accept="image/*"
+  maxFileSize="5000000"
+  (onUpload)="[onUpload($event)]"
+>
+</p-fileUpload>
+
+<form [formGroup]="userForm" (ngSubmit)="onSubmit()">
+  <div class="form-field">
+    <label class="form-label" for="fullName">Full Name</label>
+    <span class="input-with-icon">
+      <input id="fullName" type="text" pInputText formControlName="fullName" />
+    </span>
+  </div>
+
+  <div class="form-field">
+    <label class="form-label" for="fullName">Email</label>
+    <span class="input-with-icon">
+      <input id="email" type="email" pInputText formControlName="email" />
+    </span>
+  </div>
+
+  <div class="form-field">
+    <label class="form-label" for="fullName">Phone Number</label>
+    <span class="input-with-icon">
+      <input
+        id="phoneNumber"
+        type="text"
+        pInputText
+        formControlName="phoneNumber"
+      />
+    </span>
+  </div>
+
+  <div>
+    <p-button
+      type="submit"
+      label="Submit"
+      styleClass="p-button-raised"
+      fluid
+    ></p-button>
+  </div>
+</form>

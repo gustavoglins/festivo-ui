@@ -1,1 +1,224 @@
-/* You can add global styles to this file, and also import other style files */
+@import "primeicons/primeicons.css";
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
+:root {
+  --font-family: "Inter", sans-serif;
+  --primary-color: #22c55e;
+  --success-color-bg: #22c55e;
+  --danger-color-bg: #ef4444;
+  --warning-color-bg: #f97316;
+  --border-color: #e3e8ed;
+
+  // --background-color: #f8fafc;
+  --background-color: #fff;
+  --surface-color: #f2f3f7;
+  --heading-color: #080d18;
+  --heading-color-reverse: #fafafa;
+  --text-color: #606a79;
+  --border-color: #cbd5e1;
+  --button-background-color: #01030c;
+  --button-background-color-hover: #02071d;
+  --button-text-color: #fff;
+  --outline-button-background-color: #ffffff;
+  --outline-button-background-color-hover: #f1f5f9;
+  --outline-button-text-color: #334155;
+}
+
+// :root[data-theme="light"] {
+//   --background-color: #f8fafc;
+//   --surface-color: #64748b;
+//   --heading-color: #0f172a;
+//   --heading-color-reverse: #fafafa;
+//   --text-color: #64748b;
+//   --border-color: #e3e8ed;
+//   --border-color: #cbd5e1;
+//   --button-background-color: #020617;
+//   --button-background-color: #01030c;
+//   --button-background-color-hover: #1e293b;
+//   --button-background-color-hover: #02071d;
+//   --button-text-color: #fff;
+//   --outline-button-background-color: #ffffff;
+//   --outline-button-background-color-hover: #f1f5f9;
+//   --outline-button-text-color: #334155;
+// }
+
+// :root[data-theme="dark"] {
+//   --background-color: #09090b;
+//   --surface-color: #71717a;
+//   --heading-color: #fafafa;
+//   --heading-color-reverse: #0f172a;
+//   --text-color: #a1a1aa;
+//   --border-color: #3f3f46;
+//   --button-background-color: #fafafa;
+//   --button-background-color-hover: #e4e4e7;
+//   --button-text-color: #000;
+//   --outline-button-background-color: #18181b;
+//   --outline-button-background-color-hover: #27272a;
+//   --outline-button-text-color: #ffffff;
+// }
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: var(--background-color);
+  font-family: var(--font-family);
+}
+
+h1 {
+  font-size: 2.5rem;
+  /* 40px */
+}
+
+h2 {
+  font-size: 2rem;
+  /* 32px */
+}
+
+h3 {
+  font-size: 1.75rem;
+  /* 28px */
+}
+
+h4 {
+  font-size: 1.5rem;
+  /* 24px */
+}
+
+h5 {
+  font-size: 1.25rem;
+  /* 20px */
+}
+
+h6 {
+  font-size: 1rem;
+  /* 16px */
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  color: var(--heading-color);
+}
+
+p {
+  font-weight: 400;
+  color: var(--text-color);
+}
+
+// <---- Forms global styles Start ---->
+form {
+    width: 22.5%;
+}
+
+form, .form-field-group {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.form-field {
+  display: flex;
+  flex-direction: column;
+  min-height: 4rem;
+  position: relative;
+}
+
+.form-label {
+    color: var(--heading-color);
+    margin-bottom: .25rem;
+    margin-left: .15rem;
+    font-weight: 400;
+}
+
+.password-field {
+  display: flex;
+  justify-content: space-between;
+}
+
+.password-field-forget {
+  font-size: 0.875rem;
+  color: var(--heading-color);
+  text-decoration: underline;
+}
+
+.form-required-field {
+  color: var(--primary-color);
+}
+
+.form-checkbox {
+  display: flex;
+  gap: .50rem;
+  margin: 0;
+}
+
+/* Fix for p-editor (rich text editor) */
+.p-editor-container {
+  width: 100%;
+}
+
+/* Ensure buttons inside input groups don't shrink */
+.p-inputgroup > * {
+  flex: 1;
+}
+
+/* Ensure flex containers allow expansion */
+.flex-container {
+  display: flex;
+  width: 100%;
+}
+
+// Form error message styles
+.error-message {
+  color: #e53e3e;
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.875rem;
+  position: absolute;
+  bottom: -1.2rem; // Adjust this based on spacing
+  left: 0;
+}
+
+p {
+    .form-link {
+        color: var(--heading-color);
+        font-weight: 600;
+        text-decoration: underline;
+    }
+}
+
+/* Ensure all PrimeNG input components take 100% width */
+.p-inputtext,
+.p-password input,
+.p-calendar input,
+.p-autocomplete input,
+.p-dropdown,
+.p-multiselect,
+.p-textarea textarea,
+.p-inputnumber input,
+.p-chips input,
+.p-editor-container,
+.p-inputmask input {
+  width: 100% !important;
+  max-width: 100%;
+  display: block;
+}
+
+/* Ensure parent containers stretch too */
+.p-inputwrapper,
+.p-calendar,
+.p-autocomplete,
+.p-dropdown,
+.p-multiselect,
+.p-inputnumber,
+.p-chips {
+  width: 100%;
+}
+// <---- Forms global styles End ---->

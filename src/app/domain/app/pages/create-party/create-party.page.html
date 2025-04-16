@@ -1,343 +1,73 @@
-<form [formGroup]="newEventForm" (ngSubmit)="onCreateParty()">
-  <!-- TODO ================================================================================================================== -->
-  <p-stepper [value]="1">
-    <p-step-list>
-      <p-step [value]="1">
-        <ng-template #content let-activateCallback="activateCallback" let-value="value">
-          <i class="material-symbols-outlined"
-            [ngClass]="{'active': activeIndex === value, 'inactive': activeIndex !== value, 'completed' : activeIndex > value}"
-            (click)="[activateCallback(), activateStep(value)]">
-            content_paste
-          </i>
-        </ng-template>
-      </p-step>
-      <p-step [value]="2">
-        <ng-template #content let-activateCallback="activateCallback" let-value="value">
-          <i class="material-symbols-outlined"
-            [ngClass]="{'active': activeIndex === value, 'inactive': activeIndex !== value, 'completed' : activeIndex > value}"
-            (click)="[activateCallback(), activateStep(value)]">
-            location_on
-          </i>
-        </ng-template>
-      </p-step>
-      <p-step [value]="3">
-        <ng-template #content let-activateCallback="activateCallback" let-value="value">
-          <i class="material-symbols-outlined"
-            [ngClass]="{'active': activeIndex === value, 'inactive': activeIndex !== value, 'completed' : activeIndex > value}"
-            (click)="[activateCallback(), activateStep(value)]">
-            add_photo_alternate
-          </i>
-        </ng-template>
-      </p-step>
-      <p-step [value]="4">
-        <ng-template #content let-activateCallback="activateCallback" let-value="value">
-          <i class="material-symbols-outlined"
-            [ngClass]="{'active': activeIndex === value, 'inactive': activeIndex !== value, 'completed' : activeIndex > value}"
-            (click)="[activateCallback(), activateStep(value)]">
-            groups
-          </i>
-        </ng-template>
-      </p-step>
-      <p-step [value]="5">
-        <ng-template #content let-activateCallback="activateCallback" let-value="value">
-          <i class="material-symbols-outlined"
-            [ngClass]="{'active': activeIndex === value, 'inactive': activeIndex !== value, 'completed' : activeIndex > value}"
-            (click)="[activateCallback(), activateStep(value)]">
-            check
-          </i>
-        </ng-template>
-      </p-step>
-    </p-step-list>
-    <p-step-panels>
-      <p-step-panel [value]="1">
-        <ng-template #content let-activateCallback="activateCallback">
-          <div class="form-container">
-            <h4>What’s the Event About?</h4>
-
-            <!-- Event Details Group -->
-            <div [formGroup]="newEventForm.controls.eventDetails" class="form-field-group">
-              <!-- Event Name Field -->
-              <div class="form-field">
-                <label for="name">Event Name</label>
-                <span class="input-with-icon">
-                  <input id="name" formControlName="name" type="text" pInputText
-                    [ngClass]="{'ng-invalid ng-dirty': submitted() && newEventForm.get('name')?.errors}" [placeholder]="eventName" />
-                </span>
-              </div>
-
-              <!-- Event Description Field -->
-              <div class="form-field">
-                <label for="name">Event Description</label>
-                <span class="input-with-icon">
-                  <input id="description" formControlName="description" type="text" pInputText
-                    [ngClass]="{'ng-invalid ng-dirty': submitted() && newEventForm.get('name')?.errors}" />
-                </span>
-              </div>
-
-              <!-- Event Date Time Group -->
-              <div [formGroup]="newEventForm.controls.eventDateTime" class="form-field-group">
-                <!-- Event Day Field -->
-                <div class="form-field">
-                  <label for="startDate">Event Day <span class="form-required-field">*</span></label>
-                  <p-datepicker id="date" formControlName="date" [showIcon]="true" dateFormat="mm/dd/yy"
-                    [minDate]="eventMinDate" [maxDate]="eventMaxDate" styleClass="full-width"
-                    [ngClass]="{'ng-invalid ng-dirty': submitted() && newEventForm.get('startDate')?.errors}"></p-datepicker>
-                </div>
-
-                <!-- Event Start Time Field -->
-                <div class="form-field">
-                  <label for="startDate">Starts At <span class="form-required-field">*</span></label>
-                  <p-datepicker id="startsAt" formControlName="startsAt" [showIcon]="true" icon="pi pi-clock"
-                    [timeOnly]="true" hourFormat="24" styleClass="full-width"
-                    [ngClass]="{'ng-invalid ng-dirty': submitted() && newEventForm.get('startDate')?.errors}"></p-datepicker>
-                </div>
-
-                <!-- Event End Time Field -->
-                <div class="form-field">
-                  <label for="startDate">Ends At <span class="form-required-field">*</span></label>
-                  <p-datepicker id="endsAt" formControlName="endsAt" [showIcon]="true" icon="pi pi-clock"
-                    [timeOnly]="true" hourFormat="24" styleClass="full-width"
-                    [ngClass]="{'ng-invalid ng-dirty': submitted() && newEventForm.get('startDate')?.errors}"></p-datepicker>
-                </div>
-              </div>
-            </div>
-            <div class="buttons-container">
-              <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
-                (onClick)="[activateCallback(2), activateStep(2)]" fluid />
-            </div>
-          </div>
-        </ng-template>
-      </p-step-panel>
-      <p-step-panel [value]="2">
-        <ng-template #content let-activateCallback="activateCallback">
-          <div class="form-container">
-            <h4>Where’s It Happening?</h4>
-
-            <!-- Event Location Group -->
-            <div [formGroup]="newEventForm.controls.eventLocation" class="form-field-group">
-              <!-- Event Street Field -->
-              <div class="form-field">
-                <label for="name">Address <span class="form-required-field">*</span></label>
-                <span class="input-with-icon">
-                  <input id="address" formControlName="address" type="text" pInputText
-                    [ngClass]="{'ng-invalid ng-dirty': submitted() && newEventForm.get('name')?.errors}" />
-                </span>
-              </div>
-
-              <!-- Event Number Field -->
-              <div class="form-field">
-                <label for="name">Number <span class="form-required-field">*</span></label>
-                <span class="input-with-icon">
-                  <input id="number" formControlName="number" type="text" pInputText
-                    [ngClass]="{'ng-invalid ng-dirty': submitted() && newEventForm.get('name')?.errors}" />
-                </span>
-              </div>
-
-              <!-- Event Complement Field -->
-              <div class="form-field">
-                <label for="name">Complement</label>
-                <span class="input-with-icon">
-                  <input id="complement" formControlName="complement" type="text" pInputText
-                    pTooltip="E.g.: Suite 12, 2nd Floor" tooltipPosition="top"
-                    [ngClass]="{'ng-invalid ng-dirty': submitted() && newEventForm.get('name')?.errors}" />
-                </span>
-              </div>
-
-              <!-- Event Complement Field -->
-              <div class="form-field">
-                <label for="name">Neighborhood
-                  <span class="form-required-field">*</span></label>
-                <span class="input-with-icon">
-                  <input id="neighborhood" formControlName="neighborhood" type="text" pInputText
-                    [ngClass]="{'ng-invalid ng-dirty': submitted() && newEventForm.get('name')?.errors}" />
-                </span>
-              </div>
-
-              <!-- Event Complement Field -->
-              <div class="form-field">
-                <label for="name">City <span class="form-required-field">*</span></label>
-                <span class="input-with-icon">
-                  <input id="city" formControlName="city" type="text" pInputText
-                    [ngClass]="{'ng-invalid ng-dirty': submitted() && newEventForm.get('name')?.errors}" />
-                </span>
-              </div>
-
-              <!-- Event Complement Field -->
-              <div class="form-field">
-                <label for="name">State <span class="form-required-field">*</span></label>
-                <span class="input-with-icon">
-                  <input id="state" formControlName="state" type="text" pInputText
-                    [ngClass]="{'ng-invalid ng-dirty': submitted() && newEventForm.get('name')?.errors}" />
-                </span>
-              </div>
-
-              <!-- Event Complement Field -->
-              <div class="form-field">
-                <label for="name">Country <span class="form-required-field">*</span></label>
-                <span class="input-with-icon">
-                  <input id="country" formControlName="country" type="text" pInputText
-                    [ngClass]="{'ng-invalid ng-dirty': submitted() && newEventForm.get('name')?.errors}" />
-                </span>
-              </div>
-
-              <!-- Event Complement Field -->
-              <div class="form-field">
-                <label for="name">Postal Code <span class="form-required-field">*</span></label>
-                <span class="input-with-icon">
-                  <p-inputmask mask="99999-999" formControlName="postalCode" />
-                </span>
-              </div>
-            </div>
-            <div class="buttons-container">
-              <p-button label="Back" severity="secondary" icon="pi pi-arrow-left"
-                (onClick)="[activateCallback(1), activateStep(1)]" fluid />
-              <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
-                (onClick)="[activateCallback(3), activateStep(3)]" fluid />
-            </div>
-          </div>
-        </ng-template>
-      </p-step-panel>
-      <p-step-panel [value]="3">
-        <ng-template #content let-activateCallback="activateCallback">
-          <div class="form-container">
-            <h4>Make It Pop!</h4>
-            <div class="form-field-group" [formGroup]="newEventForm.controls.eventMedia">
-              <div class="form-field">
-                <label for="eventLogo">Event Logo</label>
-                <p-fileupload name="eventLogo" formArrayName="eventLogo" [customUpload]="true"
-                  (uploadHandler)="onUploadEventLogo($event)" [multiple]="false" accept="image/*" maxFileSize="1000000"
-                  mode="advanced">
-                  <ng-template #empty>
-                    <div>Drag and drop file to here to upload.</div>
-                  </ng-template>
-                </p-fileupload>
-              </div>
-
-              <div class="form-field">
-                <label for="eventBanner">Event Banner</label>
-                <p-fileupload name="eventBanner" formArrayName="eventBanner" [customUpload]="true"
-                  (uploadHandler)="onUploadEventBanner($event)" [multiple]="false" accept="image/*"
-                  maxFileSize="1000000" mode="advanced">
-                  <ng-template #empty>
-                    <div>Drag and drop files to here to upload.</div>
-                  </ng-template>
-                </p-fileupload>
-              </div>
-            </div>
-            <div class="buttons-container">
-              <p-button label="Back" severity="secondary" icon="pi pi-arrow-left"
-                (onClick)="[activateCallback(2), activateStep(2)]" fluid />
-              <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
-                (onClick)="[activateCallback(4), activateStep(4)]" fluid />
-            </div>
-          </div>
-        </ng-template>
-      </p-step-panel>
-      <p-step-panel [value]="4">
-        <ng-template #content let-activateCallback="activateCallback">
-          <div class="form-container">
-            <h4>Who’s Joining?</h4>
-            <div class="buttons-container">
-              <p-button label="Back" severity="secondary" icon="pi pi-arrow-left"
-                (onClick)="[activateCallback(3), activateStep(3)]" fluid />
-              <p-button label="Next" icon="pi pi-arrow-right" iconPos="right"
-                (onClick)="[activateCallback(5), activateStep(5)]" fluid />
-              <p-button label="Decide Later" severity="primary" variant="text"
-                (onClick)="[activateCallback(5), activateStep(5)]" />
-            </div>
-          </div>
-        </ng-template>
-      </p-step-panel>
-      <p-step-panel [value]="5">
-        <ng-template #content let-activateCallback="activateCallback">
-          <div class="form-container">
-            <h4>All Set?</h4>
-            <div class="panels-container">
-              <p-panel header="Event Media">
-                <p-button label="Edit" severity="primary" variant="text" icon="pi pi-pen-to-square" iconPos="right"
-                  (onClick)="[activateCallback(3), activateStep(3)]" />
-                <div class="form-field-group">
-                  <div class="form-field">
-                    <label>Event Logo</label>
-                    <p-image [src]="eventLogo ? eventLogo : 'assets/images/default-event-logo.png'" alt="Event Logo"
-                      width="100" height="100" />
-                  </div>
-                  <div class="form-field">
-                    <label>Event Banner</label>
-                    <p-image [src]="eventBanner ? eventBanner : 'assets/images/default-event-banner.png'"
-                      alt="Event Banner" width="410" height="156" />
-                  </div>
-                </div>
-              </p-panel>
-              <p-panel header="Event Details">
-                <p-button label="Edit" severity="primary" variant="text" icon="pi pi-pen-to-square" iconPos="right"
-                  (onClick)="[activateCallback(1), activateStep(1)]" />
-                <div class="form-field-group">
-                  <div class="form-field">
-                    <label>Event Name</label>
-                    <input pInputText type="text" disabled [value]="eventName" />
-                  </div>
-                  <div class="form-field">
-                    <label>Event Description</label>
-                    <input pInputText type="text" disabled [value]="eventDescription" />
-                  </div>
-                  <div class="form-field">
-                    <label>Event Day</label>
-                    <input pInputText type="text" disabled [value]="eventDate" />
-                  </div>
-                  <div class="form-field">
-                    <label>Starts At</label>
-                    <input pInputText type="text" disabled [value]="eventStartTime" />
-                  </div>
-                  <div class="form-field">
-                    <label>Ends At</label>
-                    <input pInputText type="text" disabled [value]="eventEndTime" />
-                  </div>
-                </div>
-              </p-panel>
-              <p-panel header="Event Location">
-                <p-button label="Edit" severity="primary" variant="text" icon="pi pi-pen-to-square" iconPos="right"
-                  (onClick)="[activateCallback(2), activateStep(2)]" />
-                <div class="form-field-group">
-                  <div class="form-field">
-                    <label>Address</label>
-                    <input pInputText type="text" disabled [value]="eventAddress" />
-                  </div>
-                  <div class="form-field">
-                    <label>Complement</label>
-                    <input pInputText type="text" disabled [value]="eventComplement" />
-                  </div>
-                  <div class="form-field">
-                    <label>Neighborhood</label>
-                    <input pInputText type="text" disabled [value]="eventNeighborhood" />
-                  </div>
-                  <div class="form-field">
-                    <label>City</label>
-                    <input pInputText type="text" disabled [value]="eventCityAndState" />
-                  </div>
-                  <div class="form-field">
-                    <label>Ends At</label>
-                    <input pInputText type="text" disabled [value]="eventEndTime" />
-                  </div>
-                </div>
-              </p-panel>
-              <p-panel header="Invited Guests">
-                <p-button label="Edit" severity="primary" variant="text" icon="pi pi-pen-to-square" iconPos="right"
-                  (onClick)="[activateCallback(4), activateStep(4)]" />
-                <p-orderlist [value]="eventGuests" [listStyle]="{ 'max-height': '30rem' }" filterBy="name"
-                  filterPlaceholder="Filter by name">
-                </p-orderlist>
-              </p-panel>
-            </div>
-            <div class="buttons-container">
-              <p-button label="Back" severity="secondary" icon="pi pi-arrow-left"
-                (onClick)="[activateCallback(4), activateStep(4)]" fluid />
-              <p-button label="Create Event" icon="pi pi-plus" iconPos="right" type="submit"
-                [disabled]="!newEventForm.valid" fluid />
-            </div>
-          </div>
-        </ng-template>
-      </p-step-panel>
-    </p-step-panels>
-  </p-stepper>
+<form [formGroup]="newPartyForm" (ngSubmit)="onCreteParty()">
+    <p-stepper [value]="1">
+        <p-step-list>
+            <p-step [value]="1">
+                <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                    <app-stepper-icon 
+                        icon="content_paste" 
+                        [active]="activeIndex === value"
+                        [inactive]="activeIndex !== value" 
+                        [completed]="activeIndex > value"
+                        (click)="[activateCallback(), activateStep(value)]">
+                    </app-stepper-icon>
+                </ng-template>
+            </p-step>
+            <p-step [value]="2">
+                <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                    <app-stepper-icon 
+                        icon="location_on" 
+                        [active]="activeIndex === value"
+                        [inactive]="activeIndex !== value" 
+                        [completed]="activeIndex > value"
+                        (click)="[activateCallback(), activateStep(value)]">
+                    </app-stepper-icon>
+                </ng-template>
+            </p-step>
+            <p-step [value]="3">
+                <ng-template #content let-activateCallback="activateCallback" let-value="value">
+                    <app-stepper-icon 
+                        icon="check" 
+                        [active]="activeIndex === value"
+                        [inactive]="activeIndex !== value" 
+                        [completed]="activeIndex > value"
+                        (click)="[activateCallback(), activateStep(value)]">
+                    </app-stepper-icon>
+                </ng-template>
+            </p-step>
+        </p-step-list>
+        <p-step-panels>
+            <p-step-panel [value]="1">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <app-party-details-form 
+                        [partyMinDate]="partyMinDate"
+                        [partyMaxDate]="partyMaxDate"
+                        [submitted]="submitted()"
+                        (formUpdated)="onPartyDetailsFormUpdated($event)"
+                        (nextStep)="[activateCallback(2), activateStep(2)]">
+                    </app-party-details-form>
+                </ng-template>
+            </p-step-panel>
+            <p-step-panel [value]="2">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <app-party-location-form
+                        [submitted]="submitted()"
+                        (formUpdated)="onPartyLocationFormUpdated($event)"
+                        (previousStep)="[activateCallback(1), activateStep(1)]"
+                        (nextStep)="[activateCallback(3), activateStep(3)]">
+                    </app-party-location-form>
+                </ng-template>
+            </p-step-panel>
+            <p-step-panel [value]="3">
+                <ng-template #content let-activateCallback="activateCallback">
+                    <app-party-summary
+                        [partyData]="mapFormToRequest()"
+                        (nextStep)="onCreteParty()"
+                        (previusStep)="[activateCallback(2), activateStep(2)]"
+                        (editDetailsStep)="[activateCallback(1), activateStep(1)]"
+                        (editLocationStep)="[activateCallback(2), activateStep(2)]">
+                    </app-party-summary>
+                </ng-template>
+            </p-step-panel>
+        </p-step-panels>
+    </p-stepper>
 </form>

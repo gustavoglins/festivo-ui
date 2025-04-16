@@ -1,0 +1,13 @@
+<div class="card-container" (click)="this.selectedParty.emit(party().id)">
+    <div class="header">
+        <!-- Error: -->
+        <!-- <img alt="Party Banner" [src]="party().banner" /> -->
+    </div>
+    <div class="content">
+        <p>{{ party().date | date:'fullDate'}}</p>
+        <h4>{{ party().name }}</h4>
+        <div class="badge-container">
+            <p-tag [value]="party().address.city" icon="pi pi-map-marker" severity="contrast" />
+        </div>
+    </div>
+</div>

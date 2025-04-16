@@ -1,0 +1,16 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    h4 {
+        text-align: center;
+    }
+
+    .buttons-container {
+        margin-top: .625rem;
+        display: flex;
+        flex-direction: column;
+        gap: .625rem;
+    }
+}

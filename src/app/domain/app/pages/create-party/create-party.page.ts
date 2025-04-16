@@ -1,295 +1,141 @@
-import { CommonModule } from '@angular/common';
+import { DatePipe } from '@angular/common';
 import { Component, OnInit, signal } from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  Validators,
-} from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { ButtonModule } from 'primeng/button';
-import { CalendarModule } from 'primeng/calendar';
-import { DatePickerModule } from 'primeng/datepicker';
-import { FileUploadModule } from 'primeng/fileupload';
-import { ImageModule } from 'primeng/image';
-import { InputGroupModule } from 'primeng/inputgroup';
-import { InputGroupAddonModule } from 'primeng/inputgroupaddon';
-import { InputMaskModule } from 'primeng/inputmask';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { InputTextModule } from 'primeng/inputtext';
-import { OrderListModule } from 'primeng/orderlist';
-import { PanelModule } from 'primeng/panel';
-import { PasswordModule } from 'primeng/password';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { Router } from '@angular/router';
 import { StepperModule } from 'primeng/stepper';
-import { ToastModule } from 'primeng/toast';
-import { TooltipModule } from 'primeng/tooltip';
-import { EventDetailsResponse, NewEventRequest } from '../../interfaces/event.interface';
-import { EventService } from '../../services/event.service';
+import { NewPartyRequest } from '../../interfaces/party.interface';
+import { PartyService } from '../../services/party.service';
+import { PartyDetailsFormComponent } from "./components/party-details-form/party-details-form.component";
+import { PartyLocationFormComponent } from "./components/party-location-form/party-location-form.component";
+import { PartySummaryComponent } from "./components/party-summary/party-summary.component";
+import { StepperIconComponent } from "./components/stepper-icon/stepper-icon.component";
 
 @Component({
   selector: 'app-create-party',
-  imports: [
-    CommonModule,
-    ButtonModule,
-    ReactiveFormsModule,
-    InputGroupAddonModule,
-    InputGroupModule,
-    InputTextModule,
-    DatePickerModule,
-    InputMaskModule,
-    CalendarModule,
-    PasswordModule,
-    ToastModule,
-    RouterModule,
-    StepperModule,
-    FormsModule,
-    InputNumberModule,
-    TooltipModule,
-    FileUploadModule,
-    PanelModule,
-    OrderListModule,
-    ImageModule,
-  ],
+  imports: [ReactiveFormsModule, StepperModule, StepperIconComponent, PartyDetailsFormComponent, PartyLocationFormComponent, PartySummaryComponent],
   templateUrl: './create-party.page.html',
-  styleUrls: ['./create-party.page.scss'],
+  styleUrl: './create-party.page.scss'
 })
 export class CreatePartyPage implements OnInit {
-  private readonly TWO_YEARS_IN_DAYS = 730;
-
-  newEventForm = new FormGroup({
-    eventDetails: new FormGroup({
-      name: new FormControl(''),
-      description: new FormControl(''),
-    }),
-    eventDateTime: new FormGroup({
-      date: new FormControl('', Validators.required),
-      startsAt: new FormControl('', Validators.required),
-      endsAt: new FormControl('', Validators.required),
-    }),
-    eventLocation: new FormGroup({
-      address: new FormControl('', Validators.required),
-      number: new FormControl('', Validators.required),
-      complement: new FormControl(''),
-      neighborhood: new FormControl('', Validators.required),
-      city: new FormControl('', Validators.required),
-      state: new FormControl('', Validators.required),
-      postalCode: new FormControl('', [
-        Validators.required,
-        Validators.pattern('^[0-9]{5}-[0-9]{3}$'),
-      ]),
-      country: new FormControl('', Validators.required),
-    }),
-    eventMedia: new FormGroup({
-      eventLogo: new FormControl(''),
-      eventBanner: new FormControl(''),
-    }),
-    guests: new FormGroup({}),
-  });
-  submitted = signal(false);
   activeIndex: number = 1;
-  eventMinDate: Date = new Date();
-  eventMaxDate: Date = new Date();
+  submitted = signal(false);
+  partyMinDate: Date = new Date();
+  partyMaxDate: Date = new Date(new Date().setFullYear(new Date().getFullYear() + 2));
   username = signal<string | null>(null);
 
-  // Properties to hold the preview images
-  eventLogo: string | null = null;
-  eventBanner: string | null = null;
+  newPartyForm!: FormGroup;
 
-  constructor(private eventService: EventService, private router: Router) { }
+  constructor(private fb: FormBuilder, private partyService: PartyService, private router: Router) { }
 
   ngOnInit(): void {
-    this.eventMinDate.setDate(this.eventMinDate.getDate());
-    this.eventMaxDate.setDate(
-      this.eventMaxDate.getDate() + this.TWO_YEARS_IN_DAYS
-    );
+    this.newPartyForm = this.fb.group({
+      partyDetails: this.fb.group({}),
+      partyLocation: this.fb.group({}),
+    });
   }
 
-  activateStep(step: number) {
+  activateStep(step: number): void {
     this.activeIndex = step;
   }
 
-  onCreateParty() {
-    this.submitted.set(true);
-    if (this.newEventForm.valid) {
-      const newEventRequest: NewEventRequest = {
-        name: this.newEventForm.get('eventDetails.name')?.value || '',
-        description: this.newEventForm.get('eventDetails.description')?.value || '',
-        date: new Date(this.newEventForm.get('eventDateTime.date')!.value!),
-        startTime: new Date(this.newEventForm.get('eventDateTime.startsAt')!.value!),
-        endTime: new Date(this.newEventForm.get('eventDateTime.endsAt')!.value!),
-        address: {
-          address: this.newEventForm.get('eventLocation.address')!.value!,
-          number: this.newEventForm.get('eventLocation.number')!.value!,
-          complement: this.newEventForm.get('eventLocation.complement')!.value!,
-          neighborhood: this.newEventForm.get('eventLocation.neighborhood')!.value!,
-          city: this.newEventForm.get('eventLocation.city')!.value!,
-          state: this.newEventForm.get('eventLocation.state')!.value!,
-          postalCode: this.newEventForm.get('eventLocation.postalCode')!.value!,
-          country: this.newEventForm.get('eventLocation.country')!.value!,
-        },
-        eventLogo: this.newEventForm.get('eventMedia.eventLogo')?.value || '',
-        eventBanner: this.newEventForm.get('eventMedia.eventBanner')?.value || '',
-        guests: [],
-      }
+  onPartyDetailsFormUpdated(formGroup: FormGroup): void {
+    this.newPartyForm.setControl('partyDetails', formGroup);
+  }
 
-      console.log(newEventRequest);
-      this.eventService.createEvent(newEventRequest).subscribe({
-        next: (response: EventDetailsResponse) => {
-          console.log(response);
+  onPartyLocationFormUpdated(formGroup: FormGroup): void {
+    this.newPartyForm.setControl('partyLocation', formGroup);
+  }
+
+  onCreteParty(): void {
+    if (this.newPartyForm.valid) {
+      const newPartyRequest: NewPartyRequest = this.mapFormToRequest();
+
+      this.partyService.createParty(newPartyRequest).subscribe({
+        next: () => {
+          this.router.navigate(['/my-parties']);
         },
-        error: (error) => {
-          console.error(error);
-        },
+        error: () => {
+          console.error('Failed to create party');
+        }
       });
     } else {
-      this.newEventForm.markAllAsTouched();
-      this.newEventForm.markAsDirty();
+      this.markAllFormControlAsTouched();
+      this.markAllFormControlAsDirty();
     }
   }
 
-  onUploadEventLogo(event: any) {
-    const file = event.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.eventLogo = reader.result as string;
-      this.newEventForm.controls.eventMedia?.get('eventLogo')?.setValue(this.eventLogo);
+  mapFormToRequest(): NewPartyRequest {
+    const partyDetails = this.newPartyForm.get('partyDetails')?.value;
+    const partyLocation = this.newPartyForm.get('partyLocation')?.value;
+
+    const datePipe = new DatePipe('en-US');
+    const formattedDate = datePipe.transform(partyDetails.date, 'yyyy-MM-dd');
+    const formattedStartTime = datePipe.transform(partyDetails.startTime, 'HH:mm:ss');
+    const formattedEndTime = datePipe.transform(partyDetails.endTime, 'HH:mm:ss');
+
+    return {
+      name: partyDetails.name,
+      description: partyDetails.description,
+      date: formattedDate!,
+      startTime: formattedStartTime!,
+      endTime: formattedEndTime!,
+      address: {
+        address: partyLocation.address || '',
+        number: partyLocation.number || '',
+        complement: partyLocation.complement || '',
+        neighborhood: partyLocation.neighborhood || '',
+        city: partyLocation.city || '',
+        state: partyLocation.state || '',
+        postalCode: partyLocation.postalCode || '',
+        country: partyLocation.country || ''
+      }
     };
-    reader.readAsDataURL(file);
   }
 
-  onUploadEventBanner(event: any) {
-    const file = event.files[0];
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.eventBanner = reader.result as string; 
-      this.newEventForm.controls.eventMedia?.get('eventBanner')?.setValue(this.eventBanner);
-    };
-    reader.readAsDataURL(file);
+  private markAllFormControlAsTouched(): void {
+    Object.keys(this.newPartyForm.controls).forEach(key => {
+      const control = this.newPartyForm.get(key);
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      } else {
+        control?.markAsTouched();
+      }
+    })
   }
 
-  get eventName() {
-    return (
-      this.newEventForm.get('eventDetails.name')?.value ||
-      this.username() + "'s Event"
-    );
+  private markAllFormControlAsDirty(): void {
+    Object.keys(this.newPartyForm.controls).forEach(key => {
+      const control = this.newPartyForm.get(key);
+      if (control instanceof FormGroup) {
+        this.markFormGroupAsDirty(control);
+      } else {
+        control?.markAsDirty();
+      }
+    })
   }
 
-  get eventDescription() {
-    return (
-      this.newEventForm.get('eventDetails.description')?.value ||
-      'No description'
-    );
+  private markFormGroupTouched(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(key => {
+      const control = formGroup.get(key);
+      if (control instanceof FormGroup) {
+        this.markFormGroupTouched(control);
+      }
+      control?.markAsTouched();
+    })
   }
 
-  get eventDate() {
-    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-    const eventDayValue =
-      this.newEventForm.controls.eventDateTime.controls.date.value;
-
-    if (eventDayValue !== null) {
-      const eventDate = new Date(eventDayValue);
-      const formattedDate =
-        eventDayValue && !isNaN(eventDate.getTime())
-          ? new Intl.DateTimeFormat('en-US', {
-            timeZone,
-            year: 'numeric',
-            month: 'long',
-            day: 'numeric',
-          }).format(eventDate)
-          : 'No Event Day';
-
-      return formattedDate;
-    } else {
-      return '';
-    }
+  private markFormGroupAsDirty(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(key => {
+      const control = formGroup.get(key);
+      if (control instanceof FormGroup) {
+        this.markFormGroupAsDirty(control);
+      }
+      control?.markAsDirty();
+    })
   }
 
-  get eventStartTime() {
-    const startTimeValue =
-      this.newEventForm.controls.eventDateTime.controls.startsAt.value;
-
-    if (startTimeValue !== null) {
-      const startDate = new Date(startTimeValue);
-      const formattedTime =
-        startTimeValue && !isNaN(startDate.getTime())
-          ? new Intl.DateTimeFormat('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false,
-          }).format(startDate)
-          : 'No Start Time';
-
-      return formattedTime;
-    } else {
-      return '';
-    }
-  }
-
-  get eventEndTime() {
-    const endTimeValue =
-      this.newEventForm.controls.eventDateTime.controls.endsAt.value;
-
-    if (endTimeValue !== null) {
-      const endDate = new Date(endTimeValue);
-      const formattedTime =
-        endTimeValue && !isNaN(endDate.getTime())
-          ? new Intl.DateTimeFormat('en-US', {
-            hour: '2-digit',
-            minute: '2-digit',
-            hour12: false,
-          }).format(endDate)
-          : 'No End Time';
-      return formattedTime;
-    } else {
-      return '';
-    }
-  }
-
-  get eventAddress() {
-    const address = this.newEventForm.get('eventLocation.address')?.value;
-    const number = this.newEventForm.get('eventLocation.number')?.value;
-    return address && number ? `${address}, ${number}` : 'No address';
-  }
-
-  get eventComplement() {
-    return (
-      this.newEventForm.get('eventLocation.complement')?.value ||
-      'No complement'
-    );
-  }
-
-  get eventNeighborhood() {
-    return (
-      this.newEventForm.get('eventLocation.neighborhood')?.value ||
-      'No neighborhood'
-    );
-  }
-
-  get eventCityAndState() {
-    const city = this.newEventForm.get('eventLocation.city')?.value;
-    const state = this.newEventForm.get('eventLocation.state')?.value;
-    return city && state ? `${city} - ${state}` : 'No city and state';
-  }
-
-  get eventPostalCode() {
-    return (
-      this.newEventForm.get('eventLocation.postalCode')?.value ||
-      'No postal code'
-    );
-  }
-
-  get eventLogoControl() {
-    return this.newEventForm.get('eventMedia.eventLogo')?.value || 'No logo';
-  }
-
-  get eventBannerControl() {
-    return (
-      this.newEventForm.get('eventMedia.eventBanner')?.value || 'No banner'
-    );
-  }
-
-  get eventGuests() {
-    return [];
+  get partyName(): string {
+    return this.newPartyForm.get('partyDetails')?.get('name')?.value ||
+      (this.username() ? `${this.username()}'s party` : '');
   }
 }

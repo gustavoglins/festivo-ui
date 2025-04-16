@@ -1,0 +1,37 @@
+<div class="form-container">
+    <h4>What's the Party About?</h4>
+    <div [formGroup]="detailsForm" class="form-field-group">
+        <div class="form-field">
+            <label for="name">Name</label>
+            <input pInputText type="text" formControlName="name" id="name" placeholder="Party name"
+                [ngClass]="{'ng-invalid ng-dirty': submitted() && detailsForm.get('name')?.errors}" />
+        </div>
+        <div class="form-field">
+            <label for="description">Description</label>
+            <input pInputText type="text" formControlName="description" id="description" placeholder="Party description"
+                [ngClass]="{'ng-invalid ng-dirty': submitted() && detailsForm.get('description')?.errors}" />
+        </div>
+        <div class="form-field">
+            <label for="date">Party Date <span class="form-required-field">*</span></label>
+            <p-datepicker id="date" formControlName="date" [showIcon]="true" dateFormat="mm/dd/yy"
+                [minDate]="partyMinDate()" [maxDate]="partyMaxDate()" styleClass="full-width"
+                [ngClass]="{'ng-invalid ng-dirty': submitted() && detailsForm.get('eventDateTime.date')?.errors}"></p-datepicker>
+        </div>
+        <div class="form-field">
+            <label for="startTime">Start Time <span class="form-required-field">*</span></label>
+            <p-datepicker id="startTime" formControlName="startTime" [showIcon]="true" icon="pi pi-clock"
+                timeOnly="true" hourFormat="24"
+                [ngClass]="{'ng-invalid ng-dirty': submitted() && detailsForm.get('eventDateTime.startTime')?.errors}">
+            </p-datepicker>
+        </div>
+        <div class="form-field">
+            <label for="endTime">End Time <span class="form-required-field">*</span></label>
+            <p-datepicker id="endTime" formControlName="endTime" [showIcon]="true" icon="pi pi-clock" timeOnly="true"
+                hourFormat="24"
+                [ngClass]="{'ng-invalid ng-dirty': submitted() && detailsForm.get('eventDateTime.endTime')?.errors}"></p-datepicker>
+        </div>
+    </div>
+    <div class="buttons-container">
+        <p-button type="button" label="Next" icon="pi pi-arrow-right" iconPos="right" (click)="nextStep.emit()" class="button-next" fluid></p-button>
+    </div>
+</div>

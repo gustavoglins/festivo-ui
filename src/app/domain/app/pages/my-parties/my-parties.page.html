@@ -1,0 +1,5 @@
+@for (party of parties(); track $index) {
+<div class="cards-container">
+    <app-party-card [party]="party" (selectedParty)="onSelectParty($event)" />
+</div>
+}

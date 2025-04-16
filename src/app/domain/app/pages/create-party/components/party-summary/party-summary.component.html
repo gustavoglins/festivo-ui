@@ -1,0 +1,80 @@
+<div class="cards-container">
+    <p-panel>
+        <ng-template #header>
+            <div class="teste">
+                <h5>Event Details</h5>
+                <p-button label="Edit" icon="pi pi-pen-to-square" size="small" severity="contrast" (onClick)="this.editDetailsStep.emit()" />
+            </div>
+        </ng-template>
+        <div class="form-field-group">
+            <div class="form-field">
+                <label>Name</label>
+                <input pInputText type="text" [value]="partyData().name" disabled>
+            </div>
+            <div class="form-field">
+                <label>Description</label>
+                <input pInputText type="text" [value]="partyData().description" disabled>
+            </div>
+            <div class="form-field">
+                <label>Party Date</label>
+                <input pInputText type="text" [value]="partyData().date | date:'shortDate'" disabled>
+            </div>
+            <div class="form-field">
+                <label>Start Time</label>
+                <input pInputText type="text" [value]="partyData().startTime" disabled>
+            </div>
+            <div class="form-field">
+                <label>End Time</label>
+                <input pInputText type="text" [value]="partyData().endTime" disabled>
+            </div>
+        </div>
+    </p-panel>
+    <p-panel>
+        <ng-template #header>
+            <div class="teste">
+                <h5>Event Location</h5>
+                <p-button label="Edit" icon="pi pi-pen-to-square" size="small" severity="contrast" (onClick)="this.editLocationStep.emit()" />
+            </div>
+        </ng-template>
+                <div class="form-field-group">
+            <div class="form-field">
+                <label>Postal Code</label>
+                <input pInputText type="text" [value]="partyData().address.postalCode" disabled>
+            </div>
+            <div class="form-field">
+                <label>Address</label>
+                <input pInputText type="text" [value]="partyData().address.address" disabled>
+            </div>
+            <div class="form-field">
+                <label>Number</label>
+                <input pInputText type="text" [value]="partyData().address.number" disabled>
+            </div>
+            <div class="form-field">
+                <label>Complement</label>
+                <input pInputText type="text" [value]="partyData().address.complement" disabled>
+            </div>
+            <div class="form-field">
+                <label>Neighborhood</label>
+                <input pInputText type="text" [value]="partyData().address.neighborhood" disabled>
+            </div>
+            <div class="form-field">
+                <label>City</label>
+                <input pInputText type="text" [value]="partyData().address.city" disabled>
+            </div>
+            <div class="form-field">
+                <label>State</label>
+                <input pInputText type="text" [value]="partyData().address.state" disabled>
+            </div>
+            <div class="form-field">
+                <label>Country</label>
+                <input pInputText type="text" [value]="partyData().address.country" disabled>
+            </div>
+        </div>
+    </p-panel>
+</div>
+<div class="buttons-container">
+    <button pButton type="button" label="Create Party" icon="pi pi-plus" iconPos="right"
+        (click)="this.nextStep.emit()"></button>
+    <button pButton type="button" severity="secondary" label="Previous" icon="pi pi-arrow-left" iconPos="left"
+        (click)="this.previusStep.emit()"></button>
+</div>

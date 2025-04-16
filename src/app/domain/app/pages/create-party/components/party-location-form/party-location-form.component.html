@@ -1,0 +1,51 @@
+<div class="form-container">
+    <h4>Where’s It Happening?</h4>
+    <div [formGroup]="locationForm" class="form-field-group">
+        <div class="form-field">
+            <label for="address">Address <span class="form-required-field">*</span></label>
+            <input pInputText type="text" formControlName="address" id="address"
+                [ngClass]="{'ng-invalid ng-dirty': submitted() && locationForm.get('address')?.errors}" />
+        </div>
+        <div class="form-field">
+            <label for="number">Number <span class="form-required-field">*</span></label>
+            <input pInputText type="text" formControlName="number" id="number"
+                [ngClass]="{'ng-invalid ng-dirty': submitted() && locationForm.get('number')?.errors}" />
+        </div>
+        <div class="form-field">
+            <label for="complement">Complement</label>
+            <input pInputText type="text" formControlName="complement" id="complement"
+                [ngClass]="{'ng-invalid ng-dirty': submitted() && locationForm.get('complement')?.errors}" />
+        </div>
+        <div class="form-field">
+            <label for="neighborhood">Neighborhood <span class="form-required-field">*</span></label>
+            <input pInputText type="text" formControlName="neighborhood" id="neighborhood"
+                [ngClass]="{'ng-invalid ng-dirty': submitted() && locationForm.get('neighborhood')?.errors}" />
+        </div>
+        <div class="form-field">
+            <label for="city">City <span class="form-required-field">*</span></label>
+            <input pInputText type="text" formControlName="city" id="city"
+                [ngClass]="{'ng-invalid ng-dirty': submitted() && locationForm.get('city')?.errors}" />
+        </div>
+        <div class="form-field">
+            <label for="state">State <span class="form-required-field">*</span></label>
+            <input pInputText type="text" formControlName="state" id="state"
+                [ngClass]="{'ng-invalid ng-dirty': submitted() && locationForm.get('state')?.errors}" />
+        </div>
+        <div class="form-field">
+            <label for="postalCode">Postal Code <span class="form-required-field">*</span></label>
+            <input pInputText type="text" formControlName="postalCode" id="postalCode"
+                [ngClass]="{'ng-invalid ng-dirty': submitted() && locationForm.get('postalCode')?.errors}" />
+        </div>
+        <div class="form-field">
+            <label for="country">Country <span class="form-required-field">*</span></label>
+            <input pInputText type="text" formControlName="country" id="country"
+                [ngClass]="{'ng-invalid ng-dirty': submitted() && locationForm.get('country')?.errors}" />
+        </div>
+    </div>
+    <div class="buttons-container">
+        <p-button type="button" label="Next" icon="pi pi-arrow-right" iconPos="right" (click)="nextStep.emit()"
+            class="button-create" styleClass="button-create" fluid></p-button>
+        <p-button type="button" severity="secondary" label="Previous" icon="pi pi-arrow-left" iconPos="left" (click)="previousStep.emit()"
+            class="button-previous" styleClass="button-previous" fluid></p-button>
+    </div>
+</div>

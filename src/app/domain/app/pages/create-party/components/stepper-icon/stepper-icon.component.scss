@@ -1,0 +1,29 @@
+i {
+    background-color: transparent;
+    outline: 0.08rem solid var(--border-color);
+    color: var(--text-color);
+    transition: all 0.3s ease-out;
+}
+
+.active {
+    transform: scale(1.2);
+}
+
+.active,
+.inactive {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.625rem;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.active,
+.completed {
+    background-color: var(--primary-color);
+    color: var(--background-color);
+    outline: none;
+    outline: var(--primary-color);
+}

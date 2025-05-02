@@ -1,0 +1,31 @@
+.form-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+
+    
+    h4 {
+        text-align: center;
+    }
+
+    .form-field-group {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+
+        .form-field {
+            display: flex;
+            flex-direction: column;
+            gap: .625rem;
+            align-items: center;
+        }
+    }
+    
+
+    .buttons-container {
+        margin-top: .625rem;
+        display: flex;
+        flex-direction: column;
+        gap: .625rem;
+    }
+}

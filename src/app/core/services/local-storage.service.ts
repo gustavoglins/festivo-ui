@@ -5,17 +5,17 @@ import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
   providedIn: 'root',
 })
 export class LocalStorageService {
-  private storageAvailable: boolean | null = null;
   private isBrowser: boolean;
 
   constructor(@Inject(PLATFORM_ID) private platformId: object) {
     this.isBrowser = isPlatformBrowser(this.platformId);
-    this.storageAvailable = this.checkLocalStorageAvailability();
   }
 
-  private checkLocalStorageAvailability(): boolean {
-    if (typeof window === 'undefined' || !window.localStorage) {
-      console.error('LocalStorage is not available: Running in a non-browser environment');
+  private isLocalStorageAvailable(): boolean {
+    if (!this.isBrowser) {
+      console.error(
+        'LocalStorage is not available: Running in a non-browser environment'
+      );
       return false;
     }
     try {
@@ -28,9 +28,9 @@ export class LocalStorageService {
       return false;
     }
   }
-  
+
   setItem(key: string, value: any): void {
-    if (!this.isBrowser) return;
+    if (!this.isBrowser || !this.isLocalStorageAvailable()) return;
     try {
       localStorage.setItem(key, JSON.stringify(value));
     } catch (e) {
@@ -39,18 +39,18 @@ export class LocalStorageService {
   }
 
   getItem<T>(key: string): T | null {
-    if (!this.isBrowser) return null;
+    if (!this.isBrowser || !this.isLocalStorageAvailable()) return null;
     try {
       const value = localStorage.getItem(key);
-      return value ? JSON.parse(value) as T : null;
+      return value ? (JSON.parse(value) as T) : null;
     } catch (e) {
       console.error('Failed to retrieve from localStorage:', e);
       return null;
     }
-  } 
+  }
 
   removeItem(key: string): void {
-    if (!this.storageAvailable) return;
+    if (!this.isBrowser || !this.isLocalStorageAvailable()) return;
     try {
       localStorage.removeItem(key);
     } catch (e) {
@@ -59,7 +59,7 @@ export class LocalStorageService {
   }
 
   clear(): void {
-    if (!this.storageAvailable) return;
+    if (!this.isBrowser || !this.isLocalStorageAvailable()) return;
     try {
       localStorage.clear();
     } catch (e) {

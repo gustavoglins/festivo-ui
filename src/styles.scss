@@ -121,6 +121,12 @@ form {
 form, .form-field-group {
     display: flex;
     flex-direction: column;
+    gap: 1.4rem;
+}
+
+.form-fields-container {
+    display: flex;
+    flex-direction: column;
     gap: 2rem;
 }
 
@@ -179,10 +185,9 @@ form, .form-field-group {
 .error-message {
   color: #e53e3e;
   display: block;
-  margin-top: 0.2rem;
-  font-size: 0.875rem;
+  font-size: 0.85rem;
   position: absolute;
-  bottom: -1.2rem; // Adjust this based on spacing
+  bottom: -.9rem; // Adjust this based on spacing
   left: 0;
 }
 

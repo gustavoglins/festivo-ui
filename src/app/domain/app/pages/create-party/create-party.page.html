@@ -1,73 +1,117 @@
 <form [formGroup]="newPartyForm" (ngSubmit)="onCreteParty()">
-    <p-stepper [value]="1">
-        <p-step-list>
-            <p-step [value]="1">
-                <ng-template #content let-activateCallback="activateCallback" let-value="value">
-                    <app-stepper-icon 
-                        icon="content_paste" 
-                        [active]="activeIndex === value"
-                        [inactive]="activeIndex !== value" 
-                        [completed]="activeIndex > value"
-                        (click)="[activateCallback(), activateStep(value)]">
-                    </app-stepper-icon>
-                </ng-template>
-            </p-step>
-            <p-step [value]="2">
-                <ng-template #content let-activateCallback="activateCallback" let-value="value">
-                    <app-stepper-icon 
-                        icon="location_on" 
-                        [active]="activeIndex === value"
-                        [inactive]="activeIndex !== value" 
-                        [completed]="activeIndex > value"
-                        (click)="[activateCallback(), activateStep(value)]">
-                    </app-stepper-icon>
-                </ng-template>
-            </p-step>
-            <p-step [value]="3">
-                <ng-template #content let-activateCallback="activateCallback" let-value="value">
-                    <app-stepper-icon 
-                        icon="check" 
-                        [active]="activeIndex === value"
-                        [inactive]="activeIndex !== value" 
-                        [completed]="activeIndex > value"
-                        (click)="[activateCallback(), activateStep(value)]">
-                    </app-stepper-icon>
-                </ng-template>
-            </p-step>
-        </p-step-list>
-        <p-step-panels>
-            <p-step-panel [value]="1">
-                <ng-template #content let-activateCallback="activateCallback">
-                    <app-party-details-form 
-                        [partyMinDate]="partyMinDate"
-                        [partyMaxDate]="partyMaxDate"
-                        [submitted]="submitted()"
-                        (formUpdated)="onPartyDetailsFormUpdated($event)"
-                        (nextStep)="[activateCallback(2), activateStep(2)]">
-                    </app-party-details-form>
-                </ng-template>
-            </p-step-panel>
-            <p-step-panel [value]="2">
-                <ng-template #content let-activateCallback="activateCallback">
-                    <app-party-location-form
-                        [submitted]="submitted()"
-                        (formUpdated)="onPartyLocationFormUpdated($event)"
-                        (previousStep)="[activateCallback(1), activateStep(1)]"
-                        (nextStep)="[activateCallback(3), activateStep(3)]">
-                    </app-party-location-form>
-                </ng-template>
-            </p-step-panel>
-            <p-step-panel [value]="3">
-                <ng-template #content let-activateCallback="activateCallback">
-                    <app-party-summary
-                        [partyData]="mapFormToRequest()"
-                        (nextStep)="onCreteParty()"
-                        (previusStep)="[activateCallback(2), activateStep(2)]"
-                        (editDetailsStep)="[activateCallback(1), activateStep(1)]"
-                        (editLocationStep)="[activateCallback(2), activateStep(2)]">
-                    </app-party-summary>
-                </ng-template>
-            </p-step-panel>
-        </p-step-panels>
-    </p-stepper>
+  <p-stepper [value]="1">
+    <p-step-list>
+      <p-step [value]="1">
+        <ng-template
+          #content
+          let-activateCallback="activateCallback"
+          let-value="value"
+        >
+          <app-stepper-icon
+            icon="content_paste"
+            [active]="activeIndex === value"
+            [inactive]="activeIndex !== value"
+            [completed]="activeIndex > value"
+            (click)="[activateCallback(), activateStep(value)]"
+          >
+          </app-stepper-icon>
+        </ng-template>
+      </p-step>
+      <p-step [value]="2">
+        <ng-template
+          #content
+          let-activateCallback="activateCallback"
+          let-value="value"
+        >
+          <app-stepper-icon
+            icon="location_on"
+            [active]="activeIndex === value"
+            [inactive]="activeIndex !== value"
+            [completed]="activeIndex > value"
+            (click)="[activateCallback(), activateStep(value)]"
+          >
+          </app-stepper-icon>
+        </ng-template>
+      </p-step>
+      <p-step [value]="3">
+        <ng-template
+          #content
+          let-activateCallback="activateCallback"
+          let-value="value"
+        >
+          <app-stepper-icon
+            icon="photo_library"
+            [active]="activeIndex === value"
+            [inactive]="activeIndex !== value"
+            [completed]="activeIndex > value"
+            (click)="[activateCallback(), activateStep(value)]"
+          >
+          </app-stepper-icon>
+        </ng-template>
+      </p-step>
+      <p-step [value]="4">
+        <ng-template
+          #content
+          let-activateCallback="activateCallback"
+          let-value="value"
+        >
+          <app-stepper-icon
+            icon="check"
+            [active]="activeIndex === value"
+            [inactive]="activeIndex !== value"
+            [completed]="activeIndex > value"
+            (click)="[activateCallback(), activateStep(value)]"
+          >
+          </app-stepper-icon>
+        </ng-template>
+      </p-step>
+    </p-step-list>
+    <p-step-panels>
+      <p-step-panel [value]="1">
+        <ng-template #content let-activateCallback="activateCallback">
+          <app-party-details-form
+            [partyMinDate]="partyMinDate"
+            [partyMaxDate]="partyMaxDate"
+            [submitted]="submitted()"
+            (formUpdated)="onPartyDetailsFormUpdated($event)"
+            (nextStep)="[activateCallback(2), activateStep(2)]"
+          >
+          </app-party-details-form>
+        </ng-template>
+      </p-step-panel>
+      <p-step-panel [value]="2">
+        <ng-template #content let-activateCallback="activateCallback">
+          <app-party-location-form
+            [submitted]="submitted()"
+            (formUpdated)="onPartyLocationFormUpdated($event)"
+            (previousStep)="[activateCallback(1), activateStep(1)]"
+            (nextStep)="[activateCallback(3), activateStep(3)]"
+          >
+          </app-party-location-form>
+        </ng-template>
+      </p-step-panel>
+      <p-step-panel [value]="3">
+        <ng-template #content let-activateCallback="activateCallback">
+          <app-party-media-form
+            [submitted]="submitted()"
+            (formUpdated)="onPartyLocationFormUpdated($event)"
+            (previousStep)="[activateCallback(2), activateStep(2)]"
+            (nextStep)="[activateCallback(4), activateStep(4)]"
+          ></app-party-media-form>
+        </ng-template>
+      </p-step-panel>
+      <p-step-panel [value]="4">
+        <ng-template #content let-activateCallback="activateCallback">
+          <app-party-summary
+            [partyData]="mapFormToRequest()"
+            (nextStep)="onCreteParty()"
+            (previusStep)="[activateCallback(2), activateStep(2)]"
+            (editDetailsStep)="[activateCallback(1), activateStep(1)]"
+            (editLocationStep)="[activateCallback(2), activateStep(2)]"
+          >
+          </app-party-summary>
+        </ng-template>
+      </p-step-panel>
+    </p-step-panels>
+  </p-stepper>
 </form>

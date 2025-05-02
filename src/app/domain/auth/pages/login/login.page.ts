@@ -64,13 +64,17 @@ export class LoginPage {
         password: this.loginForm.get('password')!.value!,
       };
 
-      this.authService.login(userLoginRequest).subscribe({
-        next: () => this.router.navigate(['/']),
-        error: (error) => {
-          console.error(error);
-          this.errorMessage.set('Invalid email or password'); //TODO, make error message appear on the screen
-        },
-      });
+      this.authService
+        .login(userLoginRequest, this.loginForm.get('keepLogged')!.value!)
+        .subscribe({
+          next: () => {
+            this.router.navigate(['/']);
+          },
+          error: (error) => {
+            console.error(error);
+            this.errorMessage.set('Invalid email or password'); //TODO, make error message appear on the screen
+          },
+        });
     } else {
       this.loginForm.markAllAsTouched();
       this.loginForm.markAsDirty();

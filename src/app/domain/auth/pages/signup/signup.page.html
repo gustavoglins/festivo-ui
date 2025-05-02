@@ -5,7 +5,9 @@
 
 <form [formGroup]="signupForm" (ngSubmit)="onSubmit()">
   <div class="form-field">
-    <label class="form-label" for="fullName">Full Name <span class="form-required-field">*</span></label>
+    <label class="form-label" for="fullName"
+      >Full Name <span class="form-required-field">*</span></label
+    >
     <span class="input-with-icon">
       <input
         id="fullName"
@@ -24,7 +26,9 @@
   </div>
 
   <div class="form-field">
-    <label class="form-label" for="email">Email <span class="form-required-field">*</span></label>
+    <label class="form-label" for="email"
+      >Email <span class="form-required-field">*</span></label
+    >
     <span class="input-with-icon">
       <input
         id="email"
@@ -44,7 +48,9 @@
   </div>
 
   <div class="form-field">
-    <label class="form-label" for="phoneNumber">Phone Number <span class="form-required-field">*</span></label>
+    <label class="form-label" for="phoneNumber"
+      >Phone Number <span class="form-required-field">*</span></label
+    >
     <span class="input-with-icon">
       <p-inputMask
         id="phoneNumber"
@@ -66,7 +72,9 @@
 
   <div class="form-field-group" formGroupName="passwords">
     <div class="form-field">
-      <label class="form-label" for="password">Password <span class="form-required-field">*</span></label>
+      <label class="form-label" for="password"
+        >Password <span class="form-required-field">*</span></label
+      >
       <span class="input-with-icon">
         <p-password
           id="password"
@@ -91,7 +99,9 @@
     </div>
 
     <div class="form-field">
-      <label class="form-label" for="confirmPassword">Confirm Password <span class="form-required-field">*</span></label>
+      <label class="form-label" for="confirmPassword"
+        >Confirm Password <span class="form-required-field">*</span></label
+      >
       <span class="input-with-icon">
         <p-password
           id="confirmPassword"
@@ -123,7 +133,9 @@
   </div>
 
   <div class="form-field">
-    <label class="form-label" for="birthDate">Date of Birth <span class="form-required-field">*</span></label>
+    <label class="form-label" for="birthDate"
+      >Date of Birth <span class="form-required-field">*</span></label
+    >
     <p-datepicker
       id="birthDate"
       formControlName="birthDate"

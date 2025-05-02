@@ -11,3 +11,24 @@
 .heading {
     text-align: center;
 }
+
+
+form {
+    width: 50%;
+
+    .utils-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .check {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        a {
+            color: var(--text-color);
+            text-decoration: none;
+        }
+    }
+}

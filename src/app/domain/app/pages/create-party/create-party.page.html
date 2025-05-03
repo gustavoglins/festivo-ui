@@ -1,4 +1,5 @@
-<form [formGroup]="newPartyForm" (ngSubmit)="onCreteParty()">
+<!-- <form [formGroup]="newPartyForm" (ngSubmit)="onCreteParty()"> -->
+<form [formGroup]="newPartyForm">
   <p-stepper [value]="1">
     <p-step-list>
       <p-step [value]="1">
@@ -94,7 +95,7 @@
         <ng-template #content let-activateCallback="activateCallback">
           <app-party-media-form
             [submitted]="submitted()"
-            (formUpdated)="onPartyLocationFormUpdated($event)"
+            (formUpdated)="onPartyMediaFormUpdated($event)"
             (previousStep)="[activateCallback(2), activateStep(2)]"
             (nextStep)="[activateCallback(4), activateStep(4)]"
           ></app-party-media-form>
@@ -103,11 +104,12 @@
       <p-step-panel [value]="4">
         <ng-template #content let-activateCallback="activateCallback">
           <app-party-summary
-            [partyData]="mapFormToRequest()"
-            (nextStep)="onCreteParty()"
-            (previusStep)="[activateCallback(2), activateStep(2)]"
+            [partyData]="mapFormToRequest2()"
+            (nextStep)="onCreateParty()"
+            (previusStep)="[activateCallback(3), activateStep(3)]"
             (editDetailsStep)="[activateCallback(1), activateStep(1)]"
             (editLocationStep)="[activateCallback(2), activateStep(2)]"
+            (editMediaStep)="[activateCallback(3), activateStep(3)]"
           >
           </app-party-summary>
         </ng-template>

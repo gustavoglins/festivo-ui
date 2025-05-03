@@ -4,21 +4,27 @@ import { CardModule } from 'primeng/card';
 import { InputTextModule } from 'primeng/inputtext';
 import { PanelModule } from 'primeng/panel';
 import { NewPartyRequest } from '../../../../interfaces/party.interface';
-import { DatePipe } from '@angular/common';
-
-
+import { CommonModule, DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-party-summary',
-  imports: [PanelModule, CardModule, ButtonModule, InputTextModule, DatePipe],
+  imports: [
+    PanelModule,
+    CardModule,
+    ButtonModule,
+    InputTextModule,
+    DatePipe,
+    CommonModule,
+  ],
   templateUrl: './party-summary.component.html',
-  styleUrl: './party-summary.component.scss'
+  styleUrl: './party-summary.component.scss',
 })
 export class PartySummaryComponent {
   nextStep = output<void>();
-  previusStep = output<void>();
+  previousStep = output<void>();
   editDetailsStep = output<void>();
   editLocationStep = output<void>();
+  editMediaStep = output<void>();
 
   partyData = input.required<NewPartyRequest>();
 }

@@ -1,6 +1,11 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, OnInit, output } from '@angular/core';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import {
+  FormBuilder,
+  FormGroup,
+  ReactiveFormsModule,
+  Validators,
+} from '@angular/forms';
 import { InputTextModule } from 'primeng/inputtext';
 import { ButtonModule } from 'primeng/button';
 
@@ -8,7 +13,7 @@ import { ButtonModule } from 'primeng/button';
   selector: 'app-party-location-form',
   imports: [ReactiveFormsModule, InputTextModule, CommonModule, ButtonModule],
   templateUrl: './party-location-form.component.html',
-  styleUrl: './party-location-form.component.scss'
+  styleUrl: './party-location-form.component.scss',
 })
 export class PartyLocationFormComponent implements OnInit {
   submitted = input<boolean>(false);
@@ -47,7 +52,7 @@ export class PartyLocationFormComponent implements OnInit {
     this.nextStep.emit();
   }
 
-  onPrevios(){
+  onPrevious() {
     this.previousStep.emit();
   }
 }

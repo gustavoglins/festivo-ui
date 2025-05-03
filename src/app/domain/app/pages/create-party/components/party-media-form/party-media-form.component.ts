@@ -33,7 +33,6 @@ export class PartyMediaFormComponent implements OnInit {
 
   createForm(): void {
     this.mediaForm = this.fb.group({
-      logo: [''],
       banner: [''],
     });
   }
@@ -42,21 +41,14 @@ export class PartyMediaFormComponent implements OnInit {
     this.nextStep.emit();
   }
 
-  onPrevios() {
+  onPrevious() {
     this.previousStep.emit();
   }
 
-  onLogoSelected(event: any) {
+  onFileSelect(event: any, field: 'banner') {
     const file = event.files?.[0];
     if (file) {
-      this.mediaForm.patchValue({ logo: file });
-    }
-  }
-
-  onBannerSelected(event: any) {
-    const file = event.files?.[0];
-    if (file) {
-      this.mediaForm.patchValue({ banner: file });
+      this.mediaForm.patchValue({ [field]: file });
     }
   }
 }

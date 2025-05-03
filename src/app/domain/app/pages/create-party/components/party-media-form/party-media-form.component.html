@@ -2,35 +2,43 @@
   <h4>Media</h4>
   <div [formGroup]="mediaForm" class="form-field-group">
     <div class="form-field">
-      <h5>Party Logo</h5>
-      <p-fileUpload
-        name="logo"
-        mode="advanced"
-        [auto]="false"
-        [customUpload]="false"
-        [showUploadButton]="false"
-        [showCancelButton]="false"
-        [multiple]="false"
-        [accept]="'image/*'"
-        (onSelect)="onLogoSelected($event)"
-      >
-      </p-fileUpload>
+      <div class="form-field">
+        <h5>Party Banner</h5>
+        <p-fileUpload
+          name="banner"
+          mode="basic"
+          chooseLabel="Selecionar Banner"
+          [auto]="false"
+          [customUpload]="true"
+          (onSelect)="onFileSelect($event, 'banner')"
+          [showUploadButton]="false"
+          [showCancelButton]="false"
+          accept="image/*"
+          maxFileSize="1000000"
+        >
+        </p-fileUpload>
+      </div>
     </div>
-
-    <div class="form-field">
-      <h5>Party Banner</h5>
-      <p-fileUpload
-        name="banner"
-        mode="advanced"
-        [auto]="false"
-        [customUpload]="false"
-        [showUploadButton]="false"
-        [showCancelButton]="false"
-        [multiple]="false"
-        [accept]="'image/*'"
-        (onSelect)="onBannerSelected($event)"
-      >
-      </p-fileUpload>
-    </div>
+  </div>
+  <div class="buttons-container">
+    <button
+      pButton
+      type="button"
+      label="Next"
+      icon="pi pi-arrow-right"
+      iconPos="right"
+      (click)="onNext()"
+      class="button-create"
+    ></button>
+    <button
+      pButton
+      type="button"
+      severity="secondary"
+      label="Previous"
+      icon="pi pi-arrow-left"
+      iconPos="left"
+      (click)="onPrevious()"
+      class="button-previous"
+    ></button>
   </div>
 </div>

@@ -7,8 +7,7 @@ export interface NewPartyRequest {
   startTime: string;
   endTime: string;
   address: Address;
-  logo: string;
-  banner: string;
+  banner: string; //TODO
 }
 
 export interface PartyDetailsResponse {

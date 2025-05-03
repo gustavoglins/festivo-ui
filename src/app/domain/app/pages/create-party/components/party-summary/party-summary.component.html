@@ -1,3 +1,4 @@
+<h4>All Done?</h4>
 <div class="cards-container">
   <p-panel>
     <ng-template #header>
@@ -138,6 +139,32 @@
       </div>
     </div>
   </p-panel>
+  <p-panel>
+    <ng-template #header>
+      <div class="teste">
+        <h5>Event Media</h5>
+        <p-button
+          label="Edit"
+          icon="pi pi-pen-to-square"
+          size="small"
+          severity="contrast"
+          (onClick)="this.editMediaStep.emit()"
+        />
+      </div>
+    </ng-template>
+    <div class="form-field-group">
+      <div class="form-field">
+        <label>Banner</label>
+        @if (partyData().banner) {
+        <div class="banner-preview">
+          <p>Banner selected</p>
+        </div>
+        }@if(!partyData().banner) {
+        <p>No banner selected</p>
+        }
+      </div>
+    </div>
+  </p-panel>
 </div>
 <div class="buttons-container">
   <button
@@ -155,6 +182,6 @@
     label="Previous"
     icon="pi pi-arrow-left"
     iconPos="left"
-    (click)="this.previusStep.emit()"
+    (click)="this.previousStep.emit()"
   ></button>
 </div>

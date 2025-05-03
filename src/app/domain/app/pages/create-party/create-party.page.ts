@@ -55,30 +55,28 @@ export class CreatePartyPage implements OnInit {
     this.activeIndex = step;
   }
 
-  // Method to set
+  // Method to update the details form data in HTML
   onPartyDetailsFormUpdated(formGroup: FormGroup): void {
     this.newPartyForm.setControl('partyDetails', formGroup);
   }
 
+  // Method to update the loaction form data in HTML
   onPartyLocationFormUpdated(formGroup: FormGroup): void {
     this.newPartyForm.setControl('partyLocation', formGroup);
   }
 
+  // Method to update the media form data in HTML
   onPartyMediaFormUpdated(formGroup: FormGroup): void {
     this.newPartyForm.setControl('partyMedia', formGroup);
   }
 
-  onCreteParty(): void {
+  onCreateParty(): void {
     if (this.newPartyForm.valid) {
-      const newPartyRequest: NewPartyRequest = this.mapFormToRequest();
-
-      this.partyService.createParty(newPartyRequest).subscribe({
-        next: () => {
-          this.router.navigate(['/my-parties']);
-        },
-        error: () => {
-          console.error('Failed to create party');
-        },
+      this.mapFormToRequest().then((newPartyRequest) => {
+        this.partyService.createParty(newPartyRequest).subscribe({
+          next: () => this.router.navigate(['/my-parties']),
+          error: () => console.error('Failed to create party'),
+        });
       });
     } else {
       this.markAllFormControlAsTouched();
@@ -86,7 +84,7 @@ export class CreatePartyPage implements OnInit {
     }
   }
 
-  mapFormToRequest(): NewPartyRequest {
+  async mapFormToRequest(): Promise<NewPartyRequest> {
     const partyDetails = this.newPartyForm.get('partyDetails')?.value;
     const partyLocation = this.newPartyForm.get('partyLocation')?.value;
     const partyMedia = this.newPartyForm.get('partyMedia')?.value;
@@ -102,8 +100,8 @@ export class CreatePartyPage implements OnInit {
       'HH:mm:ss'
     );
 
-    const logoFile = partyMedia.get('logo')?.value;
-    const bannerFile = partyMedia.get('banner')?.value;
+    const bannerFile = partyMedia.banner as File;
+    const bannerStr = await this.fileToBase64(bannerFile);
 
     return {
       name: partyDetails.name,
@@ -121,8 +119,68 @@ export class CreatePartyPage implements OnInit {
         postalCode: partyLocation.postalCode || '',
         country: partyLocation.country || '',
       },
-      logo: partyMedia.logo || '',
-      banner: partyMedia.banner || '',
+      banner: bannerStr,
+    };
+  }
+
+  // onCreteParty(): void {
+  //   if (this.newPartyForm.valid) {
+  //     const newPartyRequest: NewPartyRequest = this.mapFormToRequest();
+
+  //     this.partyService.createParty(newPartyRequest).subscribe({
+  //       next: () => {
+  //         this.router.navigate(['/my-parties']);
+  //       },
+  //       error: () => {
+  //         console.error('Failed to create party');
+  //       },
+  //     });
+  //   } else {
+  //     this.markAllFormControlAsTouched();
+  //     this.markAllFormControlAsDirty();
+  //   }
+  // }
+
+  mapFormToRequest2(): NewPartyRequest {
+    const partyDetails = this.newPartyForm.get('partyDetails')?.value;
+    const partyLocation = this.newPartyForm.get('partyLocation')?.value;
+    const partyMedia = this.newPartyForm.get('partyMedia')?.value;
+
+    const datePipe = new DatePipe('en-US');
+    const formattedDate = datePipe.transform(partyDetails.date, 'yyyy-MM-dd');
+    const formattedStartTime = datePipe.transform(
+      partyDetails.startTime,
+      'HH:mm:ss'
+    );
+    const formattedEndTime = datePipe.transform(
+      partyDetails.endTime,
+      'HH:mm:ss'
+    );
+
+    const bannerFile = partyMedia.banner as File;
+    let bannerStr: string = '';
+
+    this.fileToBase64(bannerFile).then((base64File) => {
+      bannerStr = base64File;
+    });
+
+    return {
+      name: partyDetails.name,
+      description: partyDetails.description,
+      date: formattedDate!,
+      startTime: formattedStartTime!,
+      endTime: formattedEndTime!,
+      address: {
+        address: partyLocation.address || '',
+        number: partyLocation.number || '',
+        complement: partyLocation.complement || '',
+        neighborhood: partyLocation.neighborhood || '',
+        city: partyLocation.city || '',
+        state: partyLocation.state || '',
+        postalCode: partyLocation.postalCode || '',
+        country: partyLocation.country || '',
+      },
+      banner: bannerStr || '',
     };
   }
 
@@ -173,5 +231,14 @@ export class CreatePartyPage implements OnInit {
       this.newPartyForm.get('partyDetails')?.get('name')?.value ||
       (this.username() ? `${this.username()}'s party` : '')
     );
+  }
+
+  fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string); // result é a Base64
+      reader.onerror = (error) => reject(error);
+      reader.readAsDataURL(file); // Lê o arquivo como Base64
+    });
   }
 }

@@ -1,11 +1,8 @@
 :host {
     display: flex;
-}
-
-.cards-container {
-    width: 100%;
-    display: grid;
-    grid-template-columns: auto auto auto;
-    gap: 3.125rem;
+    align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
+    width: 100%;
+    gap: 2rem 0rem;
 }

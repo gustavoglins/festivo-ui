@@ -20,10 +20,6 @@ export class PartyService {
     return this.http.post<PartyDetailsResponse>(this.API_URL, newEventRequest);
   }
 
-  // createParty(partyForm: FormData): Observable<any> {
-  //   return this.http.post(this.API_URL, partyForm);
-  // }
-
   getPartyDetails(id: string): Observable<PartyDetailsResponse> {
     return this.http.get<PartyDetailsResponse>(`${this.API_URL}/${id}`);
   }
